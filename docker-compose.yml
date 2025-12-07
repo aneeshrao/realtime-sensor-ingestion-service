@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  # The FastAPI ingestion point
+  api:
+    build: ./api-service
+    ports:
+      - "8000:80"
+
+  # The SQL database for aggregations
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: sensor_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
